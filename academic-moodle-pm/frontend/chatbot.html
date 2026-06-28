@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistente Moodle-PM | Mr Tech Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(7, 8, 13, 0.75);">
+    <div class="nav-container">
+      <a href="dashboard.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-item">Painel</a></li>
+        <li><a href="leaderboard.html" class="nav-item">Ranking</a></li>
+        <li><a href="chatbot.html" class="nav-item active">Chatbot</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="chatbot-wrapper">
+    <div class="glass-panel chatbot-card" style="border-color: rgba(168, 85, 247, 0.2);">
+      <div class="chat-header">
+        <div class="bot-avatar">🤖</div>
+        <div class="bot-info">
+          <h3>Assistente Acadêmico</h3>
+          <span>Tira Dúvidas Online</span>
+        </div>
+      </div>
+
+      <!-- Histórico de Mensagens -->
+      <div class="chat-messages" id="chat-messages">
+        <!-- Injetado via chatbot.js -->
+      </div>
+
+      <!-- Dicas sugeridas -->
+      <div class="suggested-questions">
+        <span class="suggested-title">Assuntos Rápidos:</span>
+        <button class="suggested-btn">O que é Scrum?</button>
+        <button class="suggested-btn">O que é Kanban?</button>
+        <button class="suggested-btn">Etapas do Design Thinking</button>
+        <button class="suggested-btn">Como usar PMBOK?</button>
+      </div>
+
+      <!-- Área de Input -->
+      <div class="chat-input-area">
+        <textarea class="chat-input" id="chat-input" placeholder="Pergunte sobre gestão de projetos em TI e educação..." rows="1"></textarea>
+        <button class="send-btn" id="send-btn" title="Enviar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

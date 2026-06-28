@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quadro Kanban - Mr Tech Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(255, 255, 255, 0.65);">
+    <div class="nav-container">
+      <a href="dashboard.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <ul class="nav-links">
+        <!-- Injetado via auth.js -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="kanban-board-container">
+    
+    <!-- Kanban Header & Seletores -->
+    <div class="glass-panel kanban-header">
+      <div>
+        <h2 style="font-family: var(--font-title); font-size: 24px; font-weight: 800; margin-bottom: 8px;">Quadro Kanban & Sprints</h2>
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <select class="form-control" id="project-selector" onchange="selectProject(this.value)" style="width: 250px; padding: 8px 12px;">
+            <option value="">Carregando projetos...</option>
+          </select>
+          <button class="btn btn-primary" onclick="openModal('project-modal')" style="padding: 8px 16px; font-size: 13.5px; box-shadow: none;">+ Novo Projeto</button>
+        </div>
+      </div>
+      
+      <!-- Detalhes do Projeto Ativo -->
+      <div id="project-active-state" style="display: none; flex-grow: 1; max-width: 500px;">
+        <div class="glass-panel" style="padding: 16px; background: rgba(255, 255, 255, 0.4);">
+          <h3 id="active-project-title" style="font-family: var(--font-title); font-size: 16px; font-weight: 800;">Nome do Projeto</h3>
+          <p id="active-project-desc" style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px;">Descrição do projeto...</p>
+          <div style="font-size: 11.5px; display: flex; flex-direction: column; gap: 4px;">
+            <div>Orientador: <strong id="active-project-advisor">Prof. Márcio</strong></div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              Membros: <div id="active-project-members" style="display: inline-flex; gap: 4px;"></div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button class="btn btn-secondary" onclick="openModal('member-modal')" style="padding: 4px 10px; font-size: 11px;">+ Aluno</button>
+            <div id="advisor-assignment-section" style="display: none;">
+              <select id="assign-advisor-select" onchange="assignAdvisor()" style="padding: 4px 8px; font-size: 11px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border);"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado de nenhum projeto -->
+    <div class="glass-panel" id="no-project-state" style="padding: 50px; text-align: center; border-color: rgba(147, 51, 234, 0.2);">
+      <span style="font-size: 48px;">📂</span>
+      <h2 style="font-family: var(--font-title); font-size: 24px; font-weight: 800; margin-top: 16px;">Nenhum Projeto Selecionado</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px;">Crie um novo projeto acadêmico para começar a simular Sprints e acumular XP nas tarefas.</p>
+      <button class="btn btn-primary" onclick="openModal('project-modal')" style="display: inline-flex;">Criar Meu Primeiro Projeto</button>
+    </div>
+
+    <!-- Interface Kanban Real -->
+    <div id="project-active-state-board" style="display: block;">
+      <!-- Sprint Selector -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <label style="font-weight: 800; font-size: 13.5px; text-transform: uppercase;">Sprint Ativa:</label>
+          <select class="form-control" id="sprint-selector" onchange="changeSprint(this.value)" style="width: 220px; padding: 6px 12px;"></select>
+          <button class="btn btn-secondary" onclick="openModal('sprint-modal')" style="padding: 6px 12px; font-size: 12px;">+ Nova Sprint</button>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('task-modal')" id="add-task-btn" style="padding: 8px 18px; font-size: 13.5px;">+ Adicionar Tarefa</button>
+      </div>
+
+      <!-- Quadro de Colunas Kanban -->
+      <div class="kanban-columns-grid" id="kanban-board" style="display: none;">
+        <!-- Coluna To Do -->
+        <div class="glass-panel kanban-column-card kanban-column-todo">
+          <div class="kanban-column-title">
+            <span>A Fazer</span>
+            <span style="color: var(--accent-indigo);">●</span>
+          </div>
+          <div class="kanban-tasks-list" id="kanban-todo-list"></div>
+        </div>
+
+        <!-- Coluna In Progress -->
+        <div class="glass-panel kanban-column-card kanban-column-progress">
+          <div class="kanban-column-title">
+            <span>Fazendo</span>
+            <span style="color: var(--accent-blue);">●</span>
+          </div>
+          <div class="kanban-tasks-list" id="kanban-progress-list"></div>
+        </div>
+
+        <!-- Coluna Review -->
+        <div class="glass-panel kanban-column-card kanban-column-review">
+          <div class="kanban-column-title">
+            <span>Revisão</span>
+            <span style="color: var(--accent-orange);">●</span>
+          </div>
+          <div class="kanban-tasks-list" id="kanban-review-list"></div>
+        </div>
+
+        <!-- Coluna Done -->
+        <div class="glass-panel kanban-column-card kanban-column-done">
+          <div class="kanban-column-title">
+            <span>Concluído</span>
+            <span style="color: var(--accent-emerald);">●</span>
+          </div>
+          <div class="kanban-tasks-list" id="kanban-done-list"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 1. Modal Criar Projeto -->
+  <div class="modal-backdrop" id="project-modal">
+    <div class="glass-panel modal-content-card">
+      <h3 style="font-family: var(--font-title); font-size: 20px; font-weight: 800; margin-bottom: 20px;">Novo Projeto Escolar</h3>
+      <form id="create-project-form">
+        <div class="form-group">
+          <label class="form-label">Título do Projeto</label>
+          <input type="text" class="form-control" id="project-title-input" required placeholder="Ex: App de Reciclagem Escolar">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descrição Breve</label>
+          <textarea class="form-control" id="project-desc-input" rows="3" required placeholder="Detalhes sobre a solução tecnológica..."></textarea>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('project-modal')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Projeto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Modal Criar Sprint -->
+  <div class="modal-backdrop" id="sprint-modal">
+    <div class="glass-panel modal-content-card">
+      <h3 style="font-family: var(--font-title); font-size: 20px; font-weight: 800; margin-bottom: 20px;">Nova Sprint (Ciclo)</h3>
+      <form id="create-sprint-form">
+        <div class="form-group">
+          <label class="form-label">Título da Sprint</label>
+          <input type="text" class="form-control" id="sprint-title-input" required placeholder="Ex: Sprint 2: UI e Configurações">
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('sprint-modal')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Adicionar Sprint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Modal Criar Tarefa -->
+  <div class="modal-backdrop" id="task-modal">
+    <div class="glass-panel modal-content-card">
+      <h3 style="font-family: var(--font-title); font-size: 20px; font-weight: 800; margin-bottom: 20px;">Adicionar Tarefa</h3>
+      <form id="create-task-form">
+        <div class="form-group">
+          <label class="form-label">Título da Tarefa</label>
+          <input type="text" class="form-control" id="task-title-input" required placeholder="Ex: Criar banco de dados local">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descrição</label>
+          <textarea class="form-control" id="task-desc-input" rows="2" placeholder="O que deve ser realizado nesta tarefa..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Atribuir a Membro</label>
+          <select class="form-control" id="task-assigned-select" required>
+            <!-- Injetado via JS -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Recompensa XP</label>
+          <input type="number" class="form-control" id="task-xp-input" value="30" min="10" max="100">
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('task-modal')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Adicionar Tarefa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Modal Adicionar Membro Aluno -->
+  <div class="modal-backdrop" id="member-modal">
+    <div class="glass-panel modal-content-card">
+      <h3 style="font-family: var(--font-title); font-size: 20px; font-weight: 800; margin-bottom: 20px;">Adicionar Aluno ao Projeto</h3>
+      <form id="add-member-form">
+        <div class="form-group">
+          <label class="form-label">Nome de Usuário do Estudante</label>
+          <input type="text" class="form-control" id="member-username-input" required placeholder="Ex: Estudante_Carlos">
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('member-modal')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Adicionar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/kanban.js"></script>
+  <script src="js/tilt.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fórum de Discussões - Mr Tech Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(255, 255, 255, 0.65);">
+    <div class="nav-container">
+      <a href="dashboard.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <ul class="nav-links">
+        <!-- Injetado via auth.js -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="forum-container">
+    
+    <!-- 1. Visão de Lista de Tópicos -->
+    <div id="forum-list-view" style="display: block;">
+      <div class="glass-panel forum-header" style="border-color: rgba(147, 51, 234, 0.2);">
+        <div>
+          <h2 style="font-family: var(--font-title); font-size: 24px; font-weight: 800; margin-bottom: 4px;">Fórum de Discussão TI</h2>
+          <p style="color: var(--text-secondary); font-size: 13.5px;">Tire dúvidas de modelagem de TI, troque ideias de Scrum e colabore</p>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('topic-modal')">+ Criar Tópico</button>
+      </div>
+
+      <div class="glass-panel forum-list-card">
+        <div id="topics-list">
+          <p style="text-align: center; color: var(--text-secondary); padding: 20px;">Buscando tópicos escolares...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Visão do Tópico Selecionado (Respostas) -->
+    <div id="forum-detail-view" style="display: none;">
+      <div style="margin-bottom: 20px;">
+        <button class="btn btn-secondary" onclick="goBackToForum()" style="padding: 6px 16px; font-size: 13px;">◀ Voltar ao Fórum</button>
+      </div>
+
+      <!-- Tópico Original -->
+      <div id="topic-detail-header"></div>
+
+      <!-- Respostas -->
+      <h3 style="font-family: var(--font-title); font-size: 18px; font-weight: 800; margin: 28px 0 16px;">Respostas Pedagógicas</h3>
+      <div id="replies-container"></div>
+
+      <!-- Enviar Nova Resposta Form -->
+      <div class="glass-panel reply-form-card" style="border-color: rgba(147, 51, 234, 0.15);">
+        <h4 style="font-family: var(--font-title); font-size: 16px; font-weight: 800; margin-bottom: 12px;">Responder ao Tópico (+10 XP)</h4>
+        <form id="reply-form">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <textarea class="form-control" id="reply-content-input" rows="3" required placeholder="Digite sua resposta explicativa ou dica de TI..."></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary" style="padding: 8px 20px; font-size: 13.5px;">Publicar Resposta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Criar Tópico -->
+  <div class="modal-backdrop" id="topic-modal">
+    <div class="glass-panel modal-content-card">
+      <h3 style="font-family: var(--font-title); font-size: 20px; font-weight: 800; margin-bottom: 20px;">Novo Tópico (+15 XP)</h3>
+      <form id="create-topic-form">
+        <div class="form-group">
+          <label class="form-label">Título da Pergunta</label>
+          <input type="text" class="form-control" id="topic-title-input" required placeholder="Dúvida concisa e clara de TI">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Conteúdo Detalhado</label>
+          <textarea class="form-control" id="topic-content-input" rows="4" required placeholder="Explique qual a sua dúvida no projeto ou sobre Scrum..."></textarea>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('topic-modal')">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Criar Pergunta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/forum.js"></script>
+</body>
+</html>

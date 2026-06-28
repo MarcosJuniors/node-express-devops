@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ranking & Evolução - Mr Tech Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(255, 255, 255, 0.65);">
+    <div class="nav-container">
+      <a href="dashboard.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <ul class="nav-links">
+        <!-- Injetado via auth.js -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="leaderboard-container" style="max-width: 1200px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+      <h1 class="gradient-text" style="font-family: var(--font-title); font-size: 34px; font-weight: 800;">Quadro de Classificação & Evolução</h1>
+      <p style="color: var(--text-secondary);">Acompanhe a pontuação e veja o gráfico de evolução histórica de XP de cada estudante do portal</p>
+    </div>
+
+    <!-- Pódio dos Top 3 -->
+    <div class="podium-container">
+      <!-- 2º Lugar -->
+      <div class="podium-column second">
+        <div class="podium-avatar" id="p2-avatar">--</div>
+        <div class="podium-base">
+          <span class="podium-rank">2</span>
+          <span class="podium-name" id="p2-name">Aguardando...</span>
+          <span class="podium-points" id="p2-xp">0 XP</span>
+        </div>
+      </div>
+
+      <!-- 1º Lugar -->
+      <div class="podium-column first">
+        <div class="podium-avatar" id="p1-avatar">
+          <span class="podium-crown">👑</span>
+          --
+        </div>
+        <div class="podium-base">
+          <span class="podium-rank">1</span>
+          <span class="podium-name" id="p1-name">Aguardando...</span>
+          <span class="podium-points" id="p1-xp">0 XP</span>
+        </div>
+      </div>
+
+      <!-- 3º Lugar -->
+      <div class="podium-column third">
+        <div class="podium-avatar" id="p3-avatar">--</div>
+        <div class="podium-base">
+          <span class="podium-rank">3</span>
+          <span class="podium-name" id="p3-name">Aguardando...</span>
+          <span class="podium-points" id="p3-xp">0 XP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid Layout: Ranking Table (Esquerda) e Evolution Chart (Direita) -->
+    <div class="leaderboard-grid-wrapper">
+      
+      <!-- Tabela Geral de Jogadores -->
+      <div class="ranking-column-wrapper">
+        <h3 style="font-family: var(--font-title); font-size: 18px; font-weight: 800;">Tabela de Classificação</h3>
+        <div class="glass-panel ranking-table-card" style="border-color: rgba(147, 51, 234, 0.15);">
+          <div class="ranking-tr header">
+            <div>Rank</div>
+            <div>Estudante</div>
+            <div style="text-align: right;">XP Acumulado</div>
+          </div>
+          <div id="ranking-list">
+            <p style="text-align: center; color: var(--text-secondary); padding: 20px;">Buscando classificação...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evolution Chart Card -->
+      <div class="evolution-column-wrapper">
+        <h3 style="font-family: var(--font-title); font-size: 18px; font-weight: 800;">Gráfico de Evolução</h3>
+        <div class="glass-panel evolution-card" style="border-color: rgba(8, 145, 178, 0.15);">
+          <div class="evolution-header">
+            <div>
+              <h4 id="chart-student-title" style="font-family: var(--font-title); font-size: 16px; font-weight: 800; color: var(--accent-cyan);">Nome do Aluno</h4>
+              <p style="font-size: 12px; color: var(--text-secondary);">Evolução temporal de pontos de experiência adquiridos</p>
+            </div>
+            <span style="font-size: 24px;">📈</span>
+          </div>
+
+          <!-- Canvas para o gráfico de linhas -->
+          <div class="chart-wrapper">
+            <canvas id="evolution-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/leaderboard.js"></script>
+</body>
+</html>

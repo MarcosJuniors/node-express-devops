@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr Tech Solutions | Moodle-PM</title>
+  <meta name="description" content="Plataforma gamificada de aprendizado em gestão de projetos focada no ecossistema educativo escolar.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(7, 8, 13, 0.75);">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <div id="auth-actions">
+        <a href="login.html" class="btn btn-primary" style="padding: 8px 24px; font-size: 14px;">Acessar Portal</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <span class="badge-intro">Inovação em TI Educacional</span>
+      <h1 class="hero-title">Gestão de Projetos de TI <br><span class="gradient-text">na Educação</span></h1>
+      <p class="hero-subtitle">
+        Uma experiência interativa com gamificação de alto impacto. Domine Scrum, Kanban, PMBOK e Design Thinking aplicados a soluções de tecnologia escolar.
+      </p>
+      <div class="cta-group">
+        <a href="login.html" class="btn btn-primary">Iniciar Jornada</a>
+        <a href="#saiba-mais" class="btn btn-secondary">Explorar Trilha</a>
+      </div>
+    </section>
+
+    <section class="features-grid" id="saiba-mais">
+      <!-- Feature 1 -->
+      <div class="glass-panel-interactive feature-card">
+        <div class="feature-icon feat-1">📋</div>
+        <h3>Projetos de TI Escolar</h3>
+        <p>Aprenda a planejar escopos de softwares, cronogramas de infraestrutura de rede e implantar sistemas de ensino.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="glass-panel-interactive feature-card">
+        <div class="feature-icon feat-2">🏆</div>
+        <h3>Conquistas & XP</h3>
+        <p>Responda quizzes práticos, acumule pontos estelares, desbloqueie badges exclusivas e dispute o topo do ranking.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="glass-panel-interactive feature-card">
+        <div class="feature-icon feat-3">🤖</div>
+        <h3>Chatbot com IA</h3>
+        <p>Tire dúvidas sobre conceitos de TI e metodologias ativas com o assistente virtual acadêmico inteligente.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.checkAuth();
+      if (user) {
+        window.location.href = 'dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Estudante - Mr Tech Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(7, 8, 13, 0.75);">
+    <div class="nav-container">
+      <a href="dashboard.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-item active">Painel</a></li>
+        <li><a href="leaderboard.html" class="nav-item">Ranking</a></li>
+        <li><a href="chatbot.html" class="nav-item">Chatbot</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+    
+    <!-- Welcome Banner Redesenhado -->
+    <div class="glass-panel welcome-banner">
+      <div class="welcome-info">
+        <h1>Bem-vindo, <span class="gradient-text" id="welcome-user">Estudante</span>!</h1>
+        <p>Desenvolva suas habilidades de liderança e gestão de projetos tecnológicos.</p>
+        
+        <!-- Prateleira de Medalhas / Conquistas -->
+        <h3 style="font-family: var(--font-title); font-size: 15px; margin-top: 24px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px;">Minhas Conquistas (Badges)</h3>
+        <div class="badges-container">
+          <div class="badge-item" id="badge-pioneiro">
+            <span>🚀</span>
+            <span class="tooltip"><strong>Pioneiro do Portal</strong><br>Entrou na Mr Tech Solutions</span>
+          </div>
+          <div class="badge-item" id="badge-scrum">
+            <span>🎯</span>
+            <span class="tooltip"><strong>Mestre Scrum</strong><br>Concluiu Metodologias Ágeis (100+ XP)</span>
+          </div>
+          <div class="badge-item" id="badge-gestor">
+            <span>💻</span>
+            <span class="tooltip"><strong>Gestor de TI</strong><br>Concluiu Curso Principal (200+ XP)</span>
+          </div>
+          <div class="badge-item" id="badge-expert">
+            <span>👑</span>
+            <span class="tooltip"><strong>Expert Acadêmico</strong><br>Completou toda a Trilha (450 XP)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Widgets de Progresso (Circle & Chart) -->
+      <div class="stats-container" style="flex-wrap: wrap;">
+        <!-- Progresso Circular de Nível -->
+        <div class="glass-panel" style="padding: 20px; display: flex; flex-direction: column; justify-content: center; border-color: rgba(168, 85, 247, 0.2);">
+          <div class="progress-circle-container">
+            <div class="progress-circle">
+              <svg>
+                <defs>
+                  <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8b5cf6" />
+                    <stop offset="100%" stop-color="#ec4899" />
+                  </linearGradient>
+                </defs>
+                <circle class="bg" cx="45" cy="45" r="40"></circle>
+                <circle class="bar" id="level-circle-bar" cx="45" cy="45" r="40"></circle>
+              </svg>
+              <div class="value" id="level-percentage">0%</div>
+            </div>
+            <div>
+              <div class="stat-label">Nível Atual</div>
+              <div class="stat-val" id="user-level" style="font-size: 24px;">LV.1</div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="user-xp-detail">0 / 450 XP</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Gráfico de Estudo Semanal -->
+        <div class="glass-panel" style="padding: 20px; width: 220px; border-color: rgba(6, 182, 212, 0.2);">
+          <div class="widget-title">Engajamento Semanal</div>
+          <div class="chart-container">
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 25px;"></div>
+              <span class="chart-label">S</span>
+            </div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 45px;"></div>
+              <span class="chart-label">T</span>
+            </div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 80px;"></div>
+              <span class="chart-label">Q</span>
+            </div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 60px;"></div>
+              <span class="chart-label">Q</span>
+            </div>
+            <div class="chart-bar-wrapper">
+              <div class="chart-bar" style="height: 90px; background: var(--grad-primary);"></div>
+              <span class="chart-label">S</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trilhas de Aprendizado -->
+    <section>
+      <div class="section-header">
+        <h2 style="font-family: var(--font-title); font-size: 26px; font-weight: 800;">Trilhas de Aprendizado</h2>
+      </div>
+      <div class="courses-grid" id="courses-grid">
+        <p style="color: var(--text-secondary);">Buscando cursos do portal...</p>
+      </div>
+    </section>
+
+    <!-- Mural de Feedbacks (Professor e Alunos) -->
+    <section class="feedback-grid">
+      <!-- Feedback dos Professores -->
+      <div class="glass-panel feedback-section-card" style="border-color: rgba(6, 182, 212, 0.2);">
+        <h3><span style="color: var(--accent-cyan);">👨‍🏫</span> Orientações dos Professores</h3>
+        <div class="feedback-list" id="teachers-feedback-list">
+          <!-- Injetado dinamicamente dependendo da nota do estudante -->
+          <div class="feedback-bubble">
+            <div class="feedback-avatar professor">JC</div>
+            <div class="feedback-content">
+              <div class="feedback-meta">
+                <span class="feedback-name">Prof. João Carlos</span>
+                <span class="feedback-role">Coordenador de TI</span>
+              </div>
+              <p class="feedback-text">Seja bem-vindo ao portal! Recomendo começar pela trilha "Gestão de Projetos em TI na Educação" para assentar as bases teóricas de escopo e stakeholders.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Depoimentos/Dicas de Alunos -->
+      <div class="glass-panel feedback-section-card" style="border-color: rgba(168, 85, 247, 0.2);">
+        <h3><span style="color: var(--accent-purple);">💬</span> Insights & Dicas de Estudantes</h3>
+        <div class="feedback-list">
+          <div class="feedback-bubble">
+            <div class="feedback-avatar">MA</div>
+            <div class="feedback-content">
+              <div class="feedback-meta">
+                <span class="feedback-name">Mateus Amaral</span>
+                <span class="feedback-role">Estudante TI</span>
+              </div>
+              <p class="feedback-text">"A primeira questão do quiz de Design Thinking é bem conceitual sobre empatia. Leiam com atenção a justificativa do erro, me ajudou a passar de segunda!"</p>
+            </div>
+          </div>
+          <div class="feedback-bubble">
+            <div class="feedback-avatar">GL</div>
+            <div class="feedback-content">
+              <div class="feedback-meta">
+                <span class="feedback-name">Gabriela Lima</span>
+                <span class="feedback-role">Estudante TI</span>
+              </div>
+              <p class="feedback-text">"Consegui o badge 'Mestre Scrum' hoje! O chatbot responde super rápido sobre o papel do Product Owner, usei de cola antes de responder o quiz."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

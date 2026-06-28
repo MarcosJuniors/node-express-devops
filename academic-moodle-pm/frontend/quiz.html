@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Interativo - Mr Tech Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Canvas de Confetes para Vitória -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(7, 8, 13, 0.75);">
+    <div class="nav-container">
+      <a href="dashboard.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-item">Painel</a></li>
+        <li><a href="leaderboard.html" class="nav-item">Ranking</a></li>
+        <li><a href="chatbot.html" class="nav-item">Chatbot</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="quiz-container">
+    <div class="glass-panel quiz-header" style="border-color: rgba(168, 85, 247, 0.2);">
+      <h1 class="gradient-text">Avaliação Prática</h1>
+      <a href="dashboard.html" class="btn btn-secondary" style="padding: 6px 14px; font-size: 13px;">Abandonar</a>
+    </div>
+
+    <!-- Espaço para Injeção Dinâmica do Quiz (Questões ou Resultado final) -->
+    <div id="quiz-area">
+      <p style="text-align: center; color: var(--text-secondary); padding: 40px;">Carregando quiz...</p>
+    </div>
+  </main>
+
+  <script src="js/quiz.js"></script>
+</body>
+</html>

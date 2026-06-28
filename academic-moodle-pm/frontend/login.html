@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso - Mr Tech Solutions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+
+  <!-- Background Dinâmico de Bolhas Flutuantes -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <header class="glass-panel" style="border-radius: 0; background: rgba(10, 11, 16, 0.75);">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Mr Tech <span>Solutions</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-item">Home</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="auth-wrapper">
+    <div class="glass-panel auth-container" id="login-box">
+      <div class="auth-header">
+        <h2 class="gradient-text">Área do Estudante</h2>
+        <p>Acesse o portal da Moodle-PM com seu usuário</p>
+      </div>
+
+      <!-- Alertas -->
+      <div class="alert alert-danger" id="login-error"></div>
+      <div class="alert alert-success" id="login-success"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-username">Nome de usuário</label>
+          <input type="text" class="form-control" id="login-username" placeholder="Seu usuário cadastrado" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Senha de acesso</label>
+          <input type="password" class="form-control" id="login-password" placeholder="Sua senha" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">Entrar no Painel</button>
+      </form>
+
+      <div class="auth-toggle">
+        Ainda não tem conta? <a href="#" id="go-to-register">Criar Conta</a>
+      </div>
+    </div>
+
+    <!-- Container de Cadastro (Auto-login e redirecionamento rápido) -->
+    <div class="glass-panel auth-container" id="register-box" style="display: none;">
+      <div class="auth-header">
+        <h2 class="gradient-text">Novo Estudante</h2>
+        <p>Cadastre-se para ganhar XP e subir no ranking</p>
+      </div>
+
+      <!-- Alertas -->
+      <div class="alert alert-danger" id="register-error"></div>
+      <div class="alert alert-success" id="register-success"></div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label" for="register-username">Nome de usuário</label>
+          <input type="text" class="form-control" id="register-username" placeholder="Seu apelido/nome público" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="register-email">E-mail escolar</label>
+          <input type="email" class="form-control" id="register-email" placeholder="nome@escola.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="register-password">Senha</label>
+          <input type="password" class="form-control" id="register-password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">Registrar e Entrar</button>
+      </form>
+
+      <div class="auth-toggle">
+        Já possui conta? <a href="#" id="go-to-login">Fazer Login</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Verifica se já está logado
+      window.checkAuth();
+
+      const loginBox = document.getElementById('login-box');
+      const registerBox = document.getElementById('register-box');
+      const toRegisterLink = document.getElementById('go-to-register');
+      const toLoginLink = document.getElementById('go-to-login');
+
+      toRegisterLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginBox.style.display = 'none';
+        registerBox.style.display = 'block';
+      });
+
+      toLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerBox.style.display = 'none';
+        loginBox.style.display = 'block';
+      });
+
+      // Submit do Login
+      const loginForm = document.getElementById('login-form');
+      const loginError = document.getElementById('login-error');
+      const loginSuccess = document.getElementById('login-success');
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loginError.style.display = 'none';
+        loginSuccess.style.display = 'none';
+
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        try {
+          const response = await fetch(`${window.API_BASE}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Erro de autenticação.');
+          }
+
+          loginSuccess.textContent = 'Acesso liberado! Redirecionando...';
+          loginSuccess.style.display = 'block';
+          
+          localStorage.setItem('moodle_user', JSON.stringify(data.user));
+          
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 800);
+
+        } catch (error) {
+          loginError.textContent = error.message;
+          loginError.style.display = 'block';
+        }
+      });
+
+      // Submit do Registro com Auto-Login
+      const registerForm = document.getElementById('register-form');
+      const registerError = document.getElementById('register-error');
+      const registerSuccess = document.getElementById('register-success');
+
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        registerError.style.display = 'none';
+        registerSuccess.style.display = 'none';
+
+        const username = document.getElementById('register-username').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+
+        try {
+          const response = await fetch(`${window.API_BASE}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Erro ao registrar.');
+          }
+
+          registerSuccess.textContent = 'Conta criada com sucesso! Acessando o painel...';
+          registerSuccess.style.display = 'block';
+
+          // Executa Login Automático imediatamente
+          const loginResponse = await fetch(`${window.API_BASE}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+
+          const loginData = await loginResponse.json();
+
+          if (loginResponse.ok) {
+            localStorage.setItem('moodle_user', JSON.stringify(loginData.user));
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1000);
+          } else {
+            // Fallback se falhar
+            setTimeout(() => {
+              registerBox.style.display = 'none';
+              loginBox.style.display = 'block';
+              document.getElementById('login-username').value = username;
+            }, 1200);
+          }
+
+        } catch (error) {
+          registerError.textContent = error.message;
+          registerError.style.display = 'block';
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
